@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot of AddNewRecord 1`] = `
+<tr
+  data-testid="add-new-row"
+>
+  <td>
+    <input
+      data-testid="add-new-item"
+      type="text"
+      value="item no 0"
+    />
+  </td>
+  <td>
+    <input
+      data-testid="add-new-itemDesc"
+      type="text"
+      value="item description of 0"
+    />
+  </td>
+  <td>
+    <input
+      data-testid="add-new-price"
+      type="text"
+      value="100"
+    />
+  </td>
+  <td>
+    <button
+      class="btn btn-link"
+      data-testid="add-new-row-remove-button"
+      type="button"
+    >
+      Remove
+    </button>
+  </td>
+</tr>
+`;

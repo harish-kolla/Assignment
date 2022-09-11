@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot of table 1`] = `
+<div>
+  <nav
+    class="navbar sticky-top navbar-light "
+    style="background: rgb(227, 242, 253);"
+  >
+    <button
+      class="add-buttton btn btn-primary"
+      data-testid="add-row-button"
+      type="button"
+    >
+      Add Row
+    </button>
+    <span
+      class="virtulized-list"
+      data-testid="virtulized-list"
+    >
+      Virtualized List
+    </span>
+    <button
+      class="btn btn-link"
+      data-testid="scroll-top-button"
+      type="button"
+    >
+      Top Page
+    </button>
+  </nav>
+  <div
+    class="infinite-scroll-component__outerdiv"
+  >
+    <div
+      class="infinite-scroll-component "
+      style="height: auto; overflow: auto;"
+    >
+      <table
+        class="table table-bordered table-hover"
+      >
+        <thead>
+          <tr>
+            <th
+              width="170"
+            >
+              Item
+            </th>
+            <th
+              width="170"
+            >
+              Item Description
+            </th>
+            <th
+              width="170"
+            >
+              Price
+            </th>
+            <th
+              width="100"
+            >
+              Delete
+            </th>
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+      <h4>
+        Loading 50 more records...
+      </h4>
+    </div>
+  </div>
+</div>
+`;

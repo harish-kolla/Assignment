@@ -2,62 +2,31 @@ import React, { useState, useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
-import { HeaderComponent } from "./header";
-import { AddNewRecord } from "./newRecord";
 
-const tableData = [
-  {
-    item: "item 1",
-    itemDesc: "item",
-    price: 200,
-    id: 1,
-  },
-  {
-    item: "item 2",
-    itemDesc: "item",
-    price: 200,
-    id: 2,
-  },
-  {
-    item: "item 3",
-    itemDesc: "item",
-    price: 200,
-    id: 3,
-  },
-  {
-    item: "item 4",
-    itemDesc: "item",
-    price: 200,
-    id: 4,
-  },
-  {
-    item: "item 5",
-    itemDesc: "item",
-    price: 200,
-    id: 5,
-  },
-  {
-    item: "item 6",
-    itemDesc: "item",
-    price: 200,
-    id: 6,
-  },
-  {
-    item: "item 7",
-    itemDesc: "item",
-    price: 200,
-    id: 7,
-  },
-];
+import { HeaderComponent } from "../Header/header";
+import { AddNewRecord } from "../NewRecord/newRecord";
+import { staticKeys } from "../../constants";
 
 export const CustomTable = () => {
-  const [items, updateItems] = useState(tableData);
+  const [originalData, updateOriginalData] = useState([]);
+  const [items, updateItems] = useState([]);
   const [displayRow, updateRow] = useState(false);
   const [recordsCount, updateRecordsCount] = useState(50);
   const [hasMoreItems, updateMoreItems] = useState(true);
   const [newRecord, updateRecord] = useState("");
 
-  const addNewRow = (e) => {
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    axios.get("data.json").then((res) => {
+      updateOriginalData(res?.data); //storing 200k records data in originalData state, So that when we remove record will not update complete list(wil update only items list)
+      updateItems(res?.data?.slice(0, 50));
+    });
+  };
+
+  const addNewRow = () => {
     scrollToTop();
     if (newRecord) {
       addRecordDetals();
@@ -87,13 +56,17 @@ export const CustomTable = () => {
   };
 
   const fetchMoreRecords = () => {
-    if (items.length <= recordsCount) {
+    if (originalData.length <= recordsCount) {
       updateMoreItems(!hasMoreItems);
     }
     setTimeout(() => {
-      updateRecordsCount(recordsCount + 50);
+      updateRecordsCount(recordsCount + 50); // added setTimeout to delay loading response (as we are not triggering API call)
     }, 1000);
   };
+
+  useEffect(() => {
+    updateItems(originalData.slice(0, recordsCount)); //loading 50 records at a time, On scroll will load other records
+  }, [recordsCount, originalData]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -101,24 +74,20 @@ export const CustomTable = () => {
 
   return (
     <div>
-      <HeaderComponent
-        addNewRow={addNewRow}
-        scrollToTop={scrollToTop}
-        itemsCount={items?.length}
-      />
+      <HeaderComponent addNewRow={addNewRow} scrollToTop={scrollToTop} />
       <InfiniteScroll
         dataLength={recordsCount}
         next={fetchMoreRecords}
         hasMore={hasMoreItems}
-        loader={<h4>Loading 50 more records...</h4>}
+        loader={<h4>{staticKeys.loadMore}</h4>}
       >
         <Table bordered hover>
           <thead>
             <tr>
-              <th width="170">Item</th>
-              <th width="170">Item Description</th>
-              <th width="170">Price</th>
-              <th width="100">Delete</th>
+              <th width="170">{staticKeys.item}</th>
+              <th width="170">{staticKeys.itemDesc}</th>
+              <th width="170">{staticKeys.price}</th>
+              <th width="100">{staticKeys.delete}</th>
             </tr>
           </thead>
           <tbody>
@@ -129,18 +98,19 @@ export const CustomTable = () => {
                 updateRow={updateRow}
               />
             )}
-            {items?.slice(0, recordsCount).map((record, index) => (
-              <tr key={index}>
-                <td>{record.item}</td>
+            {items?.map((record, index) => (
+              <tr data-testid="row" key={index}>
+                <td data-testid={`item-${index}`}>{record.item}</td>
                 <td>{record.itemDesc}</td>
                 <td>{record.price}</td>
                 <td>
                   <button
+                    data-testid={`remove-${index}`}
                     type="button"
                     className="btn btn-link"
                     onClick={() => removeRecord(index)}
                   >
-                    Remove
+                    {staticKeys.remove}
                   </button>
                 </td>
               </tr>

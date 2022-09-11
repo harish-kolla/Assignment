@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-// import App from "./App";
-import { CustomTable } from "./components/table";
-import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.css";
+
+import "./index.css";
+import { CustomTable } from "./components/Table/table";
+import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

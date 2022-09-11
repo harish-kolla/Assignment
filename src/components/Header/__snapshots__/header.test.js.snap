@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot of AddNewRecord 1`] = `
+<nav
+  class="navbar sticky-top navbar-light "
+  style="background: rgb(227, 242, 253);"
+>
+  <button
+    class="add-buttton btn btn-primary"
+    data-testid="add-row-button"
+    type="button"
+  >
+    Add Row
+  </button>
+  <span
+    class="virtulized-list"
+    data-testid="virtulized-list"
+  >
+    Virtualized List
+  </span>
+  <button
+    class="btn btn-link"
+    data-testid="scroll-top-button"
+    type="button"
+  >
+    Top Page
+  </button>
+</nav>
+`;

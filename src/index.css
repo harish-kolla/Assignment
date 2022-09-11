@@ -15,3 +15,8 @@ input{
   border:none;
   width:100%;
 }
+.virtulized-list{
+  font-size: 2rem;
+  font-family: cursive;
+  font-style: italic;
+}
