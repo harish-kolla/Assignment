@@ -25,7 +25,7 @@ export const HeaderComponent = ({ addNewRow, scrollToTop }) => {
         className="btn btn-link to-top"
         onClick={scrollToTop}
       >
-        {staticKeys.topPage} <img src={topIcon} />
+        {staticKeys.topPage} <img src={topIcon} alt="" />
       </button>
     </nav>
   );
