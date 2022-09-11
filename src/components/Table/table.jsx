@@ -3,9 +3,10 @@ import Table from "react-bootstrap/Table";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
 
-import { HeaderComponent } from "../Header/header";
-import { AddNewRecord } from "../NewRecord/newRecord";
+import { HeaderComponent } from "../Header";
+import { AddNewRecord } from "../NewRecord";
 import { staticKeys } from "../../constants";
+import deleteIcon from "../../icons/delete.svg";
 
 export const CustomTable = () => {
   const [originalData, updateOriginalData] = useState([]);
@@ -81,7 +82,7 @@ export const CustomTable = () => {
         hasMore={hasMoreItems}
         loader={<h4>{staticKeys.loadMore}</h4>}
       >
-        <Table bordered hover>
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th width="170">{staticKeys.item}</th>
@@ -110,7 +111,7 @@ export const CustomTable = () => {
                     className="btn btn-link"
                     onClick={() => removeRecord(index)}
                   >
-                    {staticKeys.remove}
+                    <img src={deleteIcon} alt={"Remove"} />
                   </button>
                 </td>
               </tr>

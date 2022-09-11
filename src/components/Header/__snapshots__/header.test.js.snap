@@ -2,11 +2,10 @@
 
 exports[`Snapshot of AddNewRecord 1`] = `
 <nav
-  class="navbar sticky-top navbar-light "
-  style="background: rgb(227, 242, 253);"
+  class="navbar sticky-top navbar-light header"
 >
   <button
-    class="add-buttton btn btn-primary"
+    class="add-buttton btn btn-outline-danger"
     data-testid="add-row-button"
     type="button"
   >
@@ -19,11 +18,15 @@ exports[`Snapshot of AddNewRecord 1`] = `
     Virtualized List
   </span>
   <button
-    class="btn btn-link"
+    class="btn btn-link to-top"
     data-testid="scroll-top-button"
     type="button"
   >
-    Top Page
+    To Top 
+     
+    <img
+      src="arrow-up-circle.svg"
+    />
   </button>
 </nav>
 `;

@@ -1,3 +1,12 @@
+:root {
+  --white-color: #fff;
+  --red-color: #dc3545;
+  --orange-color: #c84941;
+  --grey-color: #2d2d42;
+  --light-grey-color: #737388;
+  --light-blue-color: #e5eaf8;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -11,12 +20,60 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-input{
-  border:none;
-  width:100%;
+
+.header {
+  background: var(--orange-color);
+  padding: 1.5rem;
 }
-.virtulized-list{
+
+input {
+  border: none;
+  width: 100%;
+}
+
+.virtulized-list {
   font-size: 2rem;
-  font-family: cursive;
-  font-style: italic;
+  font-weight: 700;
+  color: var(--white-color);
+}
+
+.btn-outline-danger {
+  background-color: var(--white-color) !important;
+  font-weight: 600;
+  color: var(--red-color) !important
+}
+
+.btn-link,
+.to-top:hover {
+  color: var(--white-color) !important;
+}
+
+.to-top:hover {
+  text-decoration: underline;
+}
+
+.to-top {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-outline-danger:hover {
+  color: var(--grey-color) !important;
+}
+
+thead tr {
+  background-color: var(--grey-color);
+  font-size: 1.1rem;
+}
+
+thead tr th {
+  color: var(--light-grey-color);
+}
+
+tbody tr:nth-child(even) {
+  background: var(--light-blue-color);
+}
+
+tbody tr:nth-child(odd) {
+  background: var(--white-color);
 }

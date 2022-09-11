@@ -5,7 +5,7 @@ export const staticKeys = {
   price: "Price",
   delete: "Delete",
   loadMore: "Loading 50 more records...",
-  topPage: "Top Page",
+  topPage: "To Top ",
   addRow: "Add Row",
   virtualizedList: "Virtualized List",
 };

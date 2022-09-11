@@ -27,7 +27,7 @@ test("Should render Add Row button", () => {
 
 test("Should render Top Page button", () => {
   const { queryByText } = render(<CustomTable />);
-  expect(queryByText("Top Page")).toBeTruthy();
+  expect(queryByText("To Top")).toBeTruthy();
 });
 
 test("Should render Infinite Scroll with `Loading 50 more records...` text", () => {

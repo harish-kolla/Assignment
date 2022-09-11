@@ -31,7 +31,10 @@ exports[`Snapshot of AddNewRecord 1`] = `
       data-testid="add-new-row-remove-button"
       type="button"
     >
-      Remove
+      <img
+        alt="Remove"
+        src="delete.svg"
+      />
     </button>
   </td>
 </tr>

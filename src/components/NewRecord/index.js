@@ -1,0 +1,1 @@
+export { AddNewRecord } from "./newRecord";

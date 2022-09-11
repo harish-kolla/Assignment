@@ -1,6 +1,7 @@
 import React from "react";
 
 import { staticKeys } from "../../constants";
+import deleteIcon from "../../icons/delete.svg";
 
 export const AddNewRecord = ({ inputChangeHandler, newRecord, updateRow }) => {
   return (
@@ -37,7 +38,7 @@ export const AddNewRecord = ({ inputChangeHandler, newRecord, updateRow }) => {
           className="btn btn-link"
           onClick={() => updateRow(false)}
         >
-          {staticKeys.remove}
+          <img src={deleteIcon} alt={staticKeys.remove} />
         </button>
       </td>
     </tr>
