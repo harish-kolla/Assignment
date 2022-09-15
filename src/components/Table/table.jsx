@@ -29,19 +29,25 @@ export const CustomTable = () => {
 
   const addNewRow = () => {
     scrollToTop();
-    if (newRecord) {
-      addRecordDetals();
-    }
+
     updateRecord("");
     updateRow(true);
   };
 
   const addRecordDetals = () => {
-    let newItems = [...items];
-    newItems.unshift(newRecord);
-    updateItems(newItems);
-    updateRecord("");
-    updateRow(false);
+    let valuesExist = false;
+    for (let key in newRecord) {
+      if (newRecord[key]) {
+        valuesExist = true;
+      }
+    }
+    if (valuesExist) {
+      let newItems = [...items];
+      newItems.unshift(newRecord);
+      updateItems(newItems);
+      updateRecord("");
+      updateRow(false);
+    }
   };
 
   const inputChangeHandler = (e, field) => {
@@ -97,6 +103,7 @@ export const CustomTable = () => {
                 inputChangeHandler={inputChangeHandler}
                 newRecord={newRecord}
                 updateRow={updateRow}
+                addRecordDetals={addRecordDetals}
               />
             )}
             {items?.map((record, index) => (

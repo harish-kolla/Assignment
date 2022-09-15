@@ -77,3 +77,25 @@ tbody tr:nth-child(even) {
 tbody tr:nth-child(odd) {
   background: var(--white-color);
 }
+
+
+
+
+/* Virtualized list */
+.virtualized-table {
+  overflow-y: scroll;
+  border-collapse: collapse;
+  display: block;
+}
+
+thead{
+  width:100%;
+  display: table;
+}
+
+.row{
+  --bs-gutter-x:none;
+}
+.Virtualized-list .btn.btn-link{
+  vertical-align: inherit;
+}
