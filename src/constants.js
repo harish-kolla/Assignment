@@ -8,4 +8,7 @@ export const staticKeys = {
   topPage: "To Top ",
   addRow: "Add Row",
   virtualizedList: "Virtualized List",
+  action: "Action",
+  rowHeight: 40,
+  defaultTableHeight: 600,
 };

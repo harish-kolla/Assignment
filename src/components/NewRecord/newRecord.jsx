@@ -8,11 +8,15 @@ export const AddNewRecord = ({
   inputChangeHandler,
   newRecord,
   updateRow,
-  addRecordDetals,
+  addRecordDetails,
 }) => {
+  //checking atleast one record has value, If value exists then add row (tick mark) will be visible to add the record
+  let checkEmptyValues = !Object.values(newRecord).some(
+    (ele) => ele !== null && ele !== ""
+  );
   return (
-    <tr data-testid="add-new-row" class="row">
-      <td class="col-md-3">
+    <tr data-testid="add-new-row" className="row">
+      <td className="col-md-3">
         <input
           data-testid="add-new-item"
           type="text"
@@ -21,7 +25,7 @@ export const AddNewRecord = ({
         />
       </td>
 
-      <td class="col-md-3">
+      <td className="col-md-3">
         <input
           data-testid="add-new-itemDesc"
           type="text"
@@ -29,7 +33,7 @@ export const AddNewRecord = ({
           onChange={(e) => inputChangeHandler(e, "itemDesc")}
         />
       </td>
-      <td class="col-md-3">
+      <td className="col-md-3">
         <input
           data-testid="add-new-price"
           type="text"
@@ -37,7 +41,7 @@ export const AddNewRecord = ({
           onChange={(e) => inputChangeHandler(e, "price")}
         />
       </td>
-      <td class="col-md-3">
+      <td className="col-md-3">
         <button
           data-testid="add-new-row-remove-button"
           type="button"
@@ -46,12 +50,12 @@ export const AddNewRecord = ({
         >
           <img src={deleteIcon} alt={staticKeys.remove} />
         </button>
-        {newRecord ? (
+        {!checkEmptyValues ? (
           <button
             data-testid="add-new-row-remove-button"
             type="button"
             className="btn btn-link"
-            onClick={addRecordDetals}
+            onClick={addRecordDetails}
           >
             <img src={checkIcon} alt="add" />
           </button>

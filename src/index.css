@@ -99,3 +99,8 @@ thead{
 .Virtualized-list .btn.btn-link{
   vertical-align: inherit;
 }
+.Virtualized-list tbody{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}

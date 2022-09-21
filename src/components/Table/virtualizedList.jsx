@@ -1,61 +1,66 @@
 import React, { useState, useEffect, useRef } from "react";
+import axios from "axios";
+import Table from "react-bootstrap/Table";
+
 import { AddNewRecord } from "../NewRecord";
 import { HeaderComponent } from "../Header";
+import { staticKeys } from "../../constants";
 import deleteIcon from "../../icons/delete.svg";
-import Table from "react-bootstrap/Table";
-import axios from "axios";
+
+const emptyRecord = {
+  id: null,
+  item: "",
+  itemDesc: "",
+  action: "",
+};
 
 export const VirtualizedList = ({
-  rowHeight = 40,
-  defaultTableHeight = 600,
+  rowHeight = staticKeys.rowHeight,
+  defaultTableHeight = staticKeys.defaultTableHeight,
 }) => {
   const [rows, updateItems] = useState([]);
   const [columns, updateColumns] = useState();
   const [scroll, updateScroll] = useState({
-    top: 0,
     index: 0,
     end: Math.ceil((defaultTableHeight * 2) / rowHeight),
   });
-  const [newRecord, updateRecord] = useState("");
+  const [newRecord, updateRecord] = useState(emptyRecord);
   const [displayRow, updateRow] = useState(false);
   const tableHeight = rowHeight * rows.length;
+
+  const getData = () => {
+    axios.get("data.json").then((res) => {
+      updateColumns(Object.keys(res?.data[0])); //Taking only first record to display column names
+      updateItems(res?.data);
+    });
+  };
 
   useEffect(() => {
     getData();
   }, []);
 
-  const getData = () => {
-    axios.get("data.json").then((res) => {
-      updateItems(res?.data); //storing 200k records data in originalData state, So that when we remove record will not update complete list(wil update only items list)
-      updateColumns(Object.keys(res?.data[0]));
-    });
+  const addRecordDetails = () => {
+    let newItems = [...rows];
+    newRecord.id = newItems.length + 1;
+    newItems.unshift(newRecord);
+    updateItems(newItems);
+    updateRecord(emptyRecord);
+    updateRow(false);
   };
 
-  const addRecordDetals = () => {
-    let valuesExist = false;
-    for (let key in newRecord) {
-      if (newRecord[key]) {
-        valuesExist = true;
-      }
-    }
-    if (valuesExist) {
-      let newItems = [...rows];
-      newItems.unshift(newRecord);
-      updateItems(newItems);
-      updateRecord("");
-      updateRow(false);
-    }
+  const getLastIndexOnViewPort = (startIndexOfViewPort) => {
+    let height = Math.ceil((defaultTableHeight * 2) / rowHeight);
+    return startIndexOfViewPort + height;
   };
 
   const onScroll = ({ target }) => {
     let updatedState = { ...scroll };
 
     let scrollTop = target.scrollTop;
-    let index = Math.floor(scrollTop / rowHeight);
+    let startIndexOfViewPort = Math.floor(scrollTop / rowHeight);
 
-    updatedState.index = index;
-    updatedState.end = index + Math.ceil((defaultTableHeight * 2) / rowHeight);
-    updatedState.top = (scrollTop / rowHeight) * rowHeight;
+    updatedState.index = startIndexOfViewPort;
+    updatedState.end = getLastIndexOnViewPort(startIndexOfViewPort);
 
     updateScroll(updatedState);
   };
@@ -63,7 +68,7 @@ export const VirtualizedList = ({
   const tableAttrs = {
     style: {
       height:
-        defaultTableHeight > tableHeight && tableHeight
+        tableHeight && defaultTableHeight > tableHeight
           ? tableHeight + 2
           : defaultTableHeight,
     },
@@ -71,12 +76,13 @@ export const VirtualizedList = ({
 
   const tbodyAttr = {
     style: {
-      position: "relative",
-      display: "inline-block",
       height: tableHeight,
       maxHeight: tableHeight,
-      width: "100%",
     },
+  };
+
+  const getTopValue = (index) => {
+    return displayRow ? (index + 1) * rowHeight : index * rowHeight;
   };
 
   const dynamicRows = () => {
@@ -90,7 +96,7 @@ export const VirtualizedList = ({
       const rowAttrs = {
         style: {
           position: "absolute",
-          top: displayRow ? (index + 1) * rowHeight : index * rowHeight,
+          top: getTopValue(index),
           left: 0,
           height: rowHeight,
           lineHeight: `${rowHeight}px`,
@@ -102,7 +108,7 @@ export const VirtualizedList = ({
           {columns?.map((column, j) => {
             if (column === "action") {
               return (
-                <td key={`key- ${rows[index].id}`} className="col-md-3">
+                <td key={`row- ${rows[index].id}`} className="col-md-3">
                   <button
                     type="button"
                     className="btn btn-link"
@@ -115,8 +121,8 @@ export const VirtualizedList = ({
             } else if (column !== "id") {
               return (
                 <td
-                  key={`keysss-${rows[index].id}${rows[index][column]}`}
-                  className="col-md-3"
+                  key={`row-${rows[index].id}${rows[index][column]}`}
+                  className="col-md-3 kkkk"
                 >
                   {rows[index][column]}
                 </td>
@@ -133,16 +139,13 @@ export const VirtualizedList = ({
   const inputChangeHandler = (e, field) => {
     let updatedNewRecord = { ...newRecord };
     updatedNewRecord[field] = e.target.value;
-    let checkEmptyValues = !Object.values(updatedNewRecord).some(
-      (ele) => ele !== null && ele !== ""
-    );
+
     updateRecord(updatedNewRecord);
-    checkEmptyValues && updateRecord("");
   };
 
   const addNewRow = (ref) => {
     scrollToTop(ref);
-    updateRecord("");
+    updateRecord(emptyRecord);
     updateRow(true);
   };
 
@@ -153,7 +156,7 @@ export const VirtualizedList = ({
     let end = scroll.end;
     let seletedId = newItems[selectedRecord].id;
 
-    //deleting selected record from Visualized list, not searching in the entire list
+    // Deleting selected record from visual records (not searching in the entire list)
     let res = newItems.slice(start, end).filter((item, i) => {
       return item.id !== seletedId;
     });
@@ -185,13 +188,13 @@ export const VirtualizedList = ({
         onScroll={onScroll}
         {...tableAttrs}
       >
-        <thead className="sticky-top" id={"visualized-list"}>
+        <thead className="sticky-top">
           <tr className="row">
             {columns?.map(
               (name, i) =>
                 name !== "id" && (
                   <th width="170" className="col-md-3" key={`${i}${name}`}>
-                    {name}
+                    {staticKeys[name] || name}
                   </th>
                 )
             )}
@@ -204,7 +207,7 @@ export const VirtualizedList = ({
               inputChangeHandler={inputChangeHandler}
               newRecord={newRecord}
               updateRow={updateRow}
-              addRecordDetals={addRecordDetals}
+              addRecordDetails={addRecordDetails}
             />
           )}
           {dynamicRows()}
